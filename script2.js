@@ -1,6 +1,7 @@
 const formLivro = document.getElementById("livroForm");
 const apiURL = "http://localhost:5151/api/Livros"
-const divCards = document.getElementById("cards2")
+const apiURL2 = "http://localhost:5151/api/Autores"
+const divCards = document.getElementById("cards")
 
 async function buscarLivros() {
     try{
@@ -57,5 +58,29 @@ async function cadastrarLivro(event){
         console.log("Erro ao cadastrar livro:", error);
     }
 }
+
+async function listarAutores(event){
+    try{
+        const resposta = await fetch(apiURL2);
+        if(!resposta.ok){
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+        }
+
+    const dados = await resposta.json();
+        
+        const selectAutor = document.getElementById("autor");
+        selectAutor.innerHTML = "<option value = ''>Selecione um autor </option>";
+        dados.forEach((dado) => {
+            const option = document.createElement("option");
+            option.value =dado.id;
+            option.textContent = dado.nome;
+            selectAutor.appendChild(option);
+        });
+        } catch (error){
+        console.log("Erro ao buscar os dados:", error);
+    }
+}
+buscarLivros(); 
+
 formLivro.addEventListener("submit", cadastrarLivro);
-buscarLivros();
+listarAutores();

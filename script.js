@@ -48,17 +48,7 @@ async function cadastrarAutor(event){
             throw new Error ("Erro ao cadastrar o autor");
         }
         
-        const dados = await resposta.json();
         
-        const selectAutor = document.getElementById("autor");
-        selectAutor.innerHTML = "<option value = ''>Selecione um autor </option>";
-        dados.forEach((dado) => {
-            const option = document.createElement("option");
-            option.value =dado.id;
-            option.textContent = dado.nome;
-            selectAutor.appendChild(option);
-        });
-
         console.log("Autor cadastrado com sucesso:", dados);
         formCadastro.reset();
         await buscarAutores();
@@ -68,5 +58,3 @@ async function cadastrarAutor(event){
 }
 formCadastro.addEventListener("submit", cadastrarAutor);
 buscarAutores();
-
-listarAutoresSelect();
